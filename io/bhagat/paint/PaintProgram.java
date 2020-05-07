@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import io.bhagat.paint.items.DrawableItem;
-import io.bhagat.paint.items.EraserMark;
 
 import javax.swing.JMenuItem;
 
@@ -23,9 +22,6 @@ public class PaintProgram extends JPanel {
 
     private static final long serialVersionUID = 2243648409907110137L;
     public static PaintProgram instance;
-
-    // TODO: convert into enum; loop through with enum.values(); ex: public enum
-    // Color { BLACK("bad"); public Color(String good){} }
 
     private JFrame frame;
     private JMenuBar menuBar;
