@@ -43,6 +43,14 @@ public class Point {
         return (int) (frame.getHeight() * y);
     }
 
+    public void setGx(int x) {
+        this.x = (double) x / frame.getWidth();
+    }
+
+    public void setGy(int y) {
+        this.y = (double) y / frame.getHeight();
+    }
+
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";

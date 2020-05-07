@@ -35,31 +35,29 @@ public class PaintManager {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ((PaintMode) params.get("mode")).mouseClicked(e);
-                PaintProgram.instance.repaint();
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 ((PaintMode) params.get("mode")).mousePressed(e);
-                PaintProgram.instance.repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 ((PaintMode) params.get("mode")).mouseReleased(e);
-                PaintProgram.instance.repaint();
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 ((PaintMode) params.get("mode")).mouseEntered(e);
-                PaintProgram.instance.repaint();
+                Point p = PaintProgram.instance.getMousePoint();
+                p.setGx(e.getX());
+                p.setGy(e.getY());
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 ((PaintMode) params.get("mode")).mouseExited(e);
-                PaintProgram.instance.repaint();
             }
             
         };

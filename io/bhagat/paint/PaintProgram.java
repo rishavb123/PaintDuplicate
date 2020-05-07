@@ -22,16 +22,21 @@ public class PaintProgram extends JPanel {
     private static final long serialVersionUID = 2243648409907110137L;
     public static PaintProgram instance;
 
-    // TODO: convert into enum; loop through with enum.values(); ex: public enum Color { BLACK("bad"); public Color(String good){} }
+    // TODO: convert into enum; loop through with enum.values(); ex: public enum
+    // Color { BLACK("bad"); public Color(String good){} }
     private static final String colors = "BLUE\tRED\tBLACK\tGREEN\tYELLOW\tWHITE";
-    private static final String[] menuBarDefinitions = { "Color\t" + colors, "Modes\t" + String.join("\t", PaintMode.modes), "Thickness\t1\t5\t10\t20\t50\t100" };
-    private static final String[] menuClassDefinitions = { "java.awt.Color", "io.bhagat.paint.modes.{val}Mode", "java.lang.Integer" };
+    private static final String[] menuBarDefinitions = { "Color\t" + colors,
+            "Modes\t" + String.join("\t", PaintMode.modes), "Thickness\t1\t5\t10\t20\t50\t100" };
+    private static final String[] menuClassDefinitions = { "java.awt.Color", "io.bhagat.paint.modes.{val}Mode",
+            "java.lang.Integer" };
     private static final String[] menuFieldDefinitions = { "{val}", "instance", "parseInt({val})" };
 
     private JFrame frame;
     private JMenuBar menuBar;
 
     private PaintManager pm = PaintManager.instance;
+
+    private Point mousePosition;
 
     public PaintProgram() {
 
@@ -51,20 +56,22 @@ public class PaintProgram extends JPanel {
             final int l = k;
             for (int i = 1; i < arr.length; i++) {
                 JMenuItem item = new JMenuItem(arr[i]);
-                if(arr[0].equals("Color")) {
+                if (arr[0].equals("Color")) {
                     Color c = (Color) Util.staticCallFromString("java.awt.Color", arr[i]);
                     item.setBackground(c);
-                    if(c.getRed() + c.getGreen() * 2 + c.getBlue() < 300) item.setForeground(Color.WHITE);
+                    if (c.getRed() + c.getGreen() * 2 + c.getBlue() < 300)
+                        item.setForeground(Color.WHITE);
                 }
                 final int j = i;
                 item.addActionListener(new ActionListener() {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        Object obj = Util.staticCallFromString(menuClassDefinitions[l].replaceAll("\\{val\\}", arr[j]), menuFieldDefinitions[l].replaceAll("\\{val\\}", arr[j]));
+                        Object obj = Util.staticCallFromString(menuClassDefinitions[l].replaceAll("\\{val\\}", arr[j]),
+                                menuFieldDefinitions[l].replaceAll("\\{val\\}", arr[j]));
                         pm.setParam(arr[0].toLowerCase(), obj);
                     }
-                    
+
                 });
                 menu.add(item);
             }
@@ -75,6 +82,30 @@ public class PaintProgram extends JPanel {
         addMouseMotionListener(pm.getMouseMotionListener());
         frame.add(menuBar, BorderLayout.NORTH);
         frame.setVisible(true);
+
+        mousePosition = new Point(0, 0);
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while (true) {
+
+                    for(DrawableItem item: pm.getItems())
+                        item.update();
+
+                    repaint();
+                    
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+        }).start();
     }
 
     public void paintComponent(Graphics graphics) {
@@ -86,12 +117,14 @@ public class PaintProgram extends JPanel {
 
         for(DrawableItem item: pm.getItems())
             item.draw(g);
-        // if(pm.getItems().size() > 0)
-        //     System.out.println("hi " + pm.getItems().size() + " " + pm.getItems().get(pm.getItems().size() - 1));
     }
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public Point getMousePoint() {
+        return mousePosition;
     }
 
     public static void main(String[] args) {
