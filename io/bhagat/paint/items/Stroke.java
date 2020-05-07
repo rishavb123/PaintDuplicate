@@ -53,13 +53,6 @@ public class Stroke extends DrawableItem {
             g.drawLine(p1.getGx(), p1.getGy(), p2.getGx(), p2.getGy());
         }
     }
-
-    @Override
-    public void update(long dt) {
-        double v = 5;
-        v /= 1000.0;
-        thickness += dt * v;
-    }
     
     public Color getColor() {
         return color;
