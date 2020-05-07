@@ -12,7 +12,7 @@ public class EraserMode extends LineMode {
     @Override
     public void mousePressed(MouseEvent e) {
         curStroke = new EraserMark((int) PaintManager.instance.getParam("thickness"));
-        PaintManager.instance.add((EraserMark) curStroke);
+        PaintManager.instance.add(curStroke);
     }
 
 }

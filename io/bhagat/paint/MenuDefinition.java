@@ -14,7 +14,8 @@ public enum MenuDefinition {
     ModeMenu(PaintMode.modes, "io.bhagat.paint.modes.{val}Mode", "instance"),
     ThicknessMenu(new String[] {"1", "5", "10", "20", "50", "100"}, "java.lang.Integer", "parseInt({val})"),
     BackgroundColorMenu(new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
-    RotationsMenu(new String[] {"15", "30", "45", "60", "75", "90", "180"}, new MenuSelectCallback() {
+    AMenu(Util.strRange(-10, 11, 1), "java.lang.Integer", "parseInt({val})"),
+    RotationsMenu(Util.strRange(-90, 91, 15), new MenuSelectCallback() {
 
         @Override
         public void call(String val) {
@@ -29,12 +30,21 @@ public enum MenuDefinition {
         }
 
     }),
-    ConfigurationsMenu(new String[] {"Clear"}, new MenuSelectCallback() {
+    ConfigurationsMenu(new String[] {"Play Animations", "Pause Animations", "Clear"}, new MenuSelectCallback() {
 
         @Override
         public void call(String val) {
-            if(val.equals("Clear"))
-                PaintManager.instance.getItems().clear();
+            switch(val) {
+                case "Play Animations":
+                    PaintManager.instance.setParam("playing", true);
+                    break;
+                case "Pause Animations":
+                    PaintManager.instance.setParam("playing", false);
+                    break;
+                case "Clear":
+                    PaintManager.instance.getItems().clear();
+                    break;
+            }
         }
 
     });

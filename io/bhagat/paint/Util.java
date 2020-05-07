@@ -27,4 +27,15 @@ public class Util {
         return out;
     }
 
+    public static String[] strRange(int min, int max, int step) {
+        int len = (int) Math.ceil((double)(max - min) / step);
+        String[] arr = new String[len];
+        int cur = min;
+        for(int i = 0; i < len; i++) {
+            arr[i] = Integer.toString(cur);
+            cur += step;
+        }
+        return arr;
+    }
+
 }

@@ -33,6 +33,7 @@ public class PaintManager {
         params.put("mode", LineMode.instance);
         params.put("thickness", 5);
         params.put("backgroundcolor", Color.BLACK);
+        params.put("playing", true);
 
         mouseListener = new MouseListener() {
             @Override

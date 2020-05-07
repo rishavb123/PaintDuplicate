@@ -92,8 +92,9 @@ public class PaintProgram extends JPanel {
 
                     long curTime = Instant.now().toEpochMilli();
 
-                    for(DrawableItem item: pm.getItems())
-                        item.update(curTime - lastTime);
+                    if((boolean) pm.getParam("playing"))
+                        for(DrawableItem item: pm.getItems())
+                            item.update(curTime - lastTime);
 
                     repaint();
                     
