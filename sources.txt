@@ -1,0 +1,11 @@
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\MenuDefinition.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\PaintManager.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\PaintProgram.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\Point.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\Util.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\DrawableItem.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\EraserMark.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\Stroke.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\EraserMode.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\LineMode.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\PaintMode.java
