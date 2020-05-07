@@ -7,7 +7,16 @@ public enum MenuDefinition {
     ColorMenu(new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
     ModeMenu(PaintMode.modes, "io.bhagat.paint.modes.{val}Mode", "instance"),
     ThicknessMenu(new String[] {"1", "5", "10", "20", "50", "100"}, "java.lang.Integer", "parseInt({val})"),
-    BackgroundColorMenu(new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}");
+    BackgroundColorMenu(new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
+    ConfigurationsMenu(new String[] {"Clear"}, new MenuSelectCallback() {
+
+        @Override
+        public void call(String val) {
+            if(val.equals("Clear"))
+                PaintManager.instance.getItems().clear();
+        }
+
+    });
     
     private String name;
     private String[] items;
