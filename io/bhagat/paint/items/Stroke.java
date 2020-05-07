@@ -62,4 +62,8 @@ public class Stroke extends DrawableItem {
         this.color = color;
     }
 
+    public List<Point> getPoints() {
+        return points;
+    }
+
 }

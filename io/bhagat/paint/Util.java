@@ -1,6 +1,7 @@
 package io.bhagat.paint;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class Util {
 
@@ -19,6 +20,11 @@ public class Util {
             }
         }
         return null;
+    }
+
+    public static <T, E extends T> List<T> copyTo(List<E> inp, List<T> out) {
+        for(E i: inp) out.add((T) i);
+        return out;
     }
 
 }

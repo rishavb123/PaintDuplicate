@@ -20,6 +20,10 @@ public class Point extends Vector {
         this((double) x / frame.getWidth() - 0.5, (double) y / frame.getHeight() - 0.5);
     }
 
+    public Point(Vector vec) {
+        this(vec.get(0), vec.get(1));
+    }
+
     public double getX() {
         return get(0);
     }

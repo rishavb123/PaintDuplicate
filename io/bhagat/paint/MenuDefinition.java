@@ -1,6 +1,12 @@
 package io.bhagat.paint;
 
+import java.util.List;
+
+import io.bhagat.paint.items.DrawableItem;
+import io.bhagat.paint.items.Stroke;
 import io.bhagat.paint.modes.PaintMode;
+import io.bhagat.paint.transforms.Rotation;
+import io.bhagat.paint.transforms.Transform;
 
 public enum MenuDefinition {
 
@@ -8,6 +14,21 @@ public enum MenuDefinition {
     ModeMenu(PaintMode.modes, "io.bhagat.paint.modes.{val}Mode", "instance"),
     ThicknessMenu(new String[] {"1", "5", "10", "20", "50", "100"}, "java.lang.Integer", "parseInt({val})"),
     BackgroundColorMenu(new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
+    RotationsMenu(new String[] {"15", "30", "45", "60", "75", "90", "180"}, new MenuSelectCallback() {
+
+        @Override
+        public void call(String val) {
+            double theta = Double.parseDouble(val);
+            Rotation rotation = Rotation.fromDegrees(theta);
+            for(DrawableItem item: PaintManager.instance.getItems()) {
+                if(item instanceof Stroke) {
+                    List<Point> points = ((Stroke) item).getPoints();
+                    Transform.transformList(points, rotation);
+                }
+            }
+        }
+
+    }),
     ConfigurationsMenu(new String[] {"Clear"}, new MenuSelectCallback() {
 
         @Override

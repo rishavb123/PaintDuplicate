@@ -10,4 +10,5 @@ C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\EraserMode.ja
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\LineMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\PaintMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\transforms\MatrixTransform.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\transforms\Rotation.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\transforms\Transform.java
