@@ -10,7 +10,7 @@ public class LineMode extends PaintMode {
 
     public static LineMode instance = new LineMode();
 
-    private Stroke curStroke;
+    protected Stroke curStroke;
 
     @Override
     public void mouseDragged(MouseEvent e) {

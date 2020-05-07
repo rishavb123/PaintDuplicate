@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 
 public abstract class PaintMode implements MouseMotionListener, MouseListener {
 
-    public static String[] modes = { "Line" };
+    public static String[] modes = { "Line", "Eraser" };
 
     public void mouseMoved(MouseEvent e){}
     public void mouseDragged(MouseEvent e){}

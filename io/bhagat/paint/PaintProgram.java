@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import io.bhagat.paint.items.DrawableItem;
-import io.bhagat.paint.modes.PaintMode;
+import io.bhagat.paint.items.EraserMark;
 
 import javax.swing.JMenuItem;
 
