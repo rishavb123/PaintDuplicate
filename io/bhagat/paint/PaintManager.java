@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import io.bhagat.paint.items.DrawableItem;
 import io.bhagat.paint.modes.LineMode;
 import io.bhagat.paint.modes.PaintMode;
@@ -27,9 +29,10 @@ public class PaintManager {
         items = new ArrayList<>();
         params = new HashMap<>();
 
-        params.put("color", Color.BLACK);
+        params.put("color", Color.WHITE);
         params.put("mode", LineMode.instance);
         params.put("thickness", 5);
+        params.put("backgroundcolor", Color.BLACK);
 
         mouseListener = new MouseListener() {
             @Override
@@ -100,7 +103,10 @@ public class PaintManager {
     }
 
     public void setParam(Object key, Object value) {
-        params.put(key, value);
+        if(value == null)
+            JOptionPane.showMessageDialog(PaintProgram.instance, "Invalid Input", "Error", JOptionPane.ERROR_MESSAGE);
+        else
+            params.put(key, value);
     }
 
 }

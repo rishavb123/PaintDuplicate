@@ -6,6 +6,6 @@ public abstract class DrawableItem {
     
     public abstract void draw(Graphics2D g);
 
-    public void update() {}
+    public void update(long dt) {}
 
 }

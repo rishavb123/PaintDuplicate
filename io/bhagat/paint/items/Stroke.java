@@ -13,7 +13,7 @@ public class Stroke extends DrawableItem {
     
     private List<Point> points;
     private Color color;
-    private int thickness;
+    private float thickness;
 
     public Stroke() {
         points = new ArrayList<>();
@@ -43,6 +43,7 @@ public class Stroke extends DrawableItem {
         points.add(new Point(x, y));
     } 
 
+    @Override
     public void draw(Graphics2D g) {
         g.setStroke(new BasicStroke(thickness));
         g.setColor(color);
@@ -51,6 +52,13 @@ public class Stroke extends DrawableItem {
             Point p2 = points.get(i);
             g.drawLine(p1.getGx(), p1.getGy(), p2.getGx(), p2.getGy());
         }
+    }
+
+    @Override
+    public void update(long dt) {
+        double v = 5;
+        v /= 1000.0;
+        thickness += dt * v;
     }
     
     public Color getColor() {

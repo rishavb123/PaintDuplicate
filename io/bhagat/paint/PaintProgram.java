@@ -2,6 +2,7 @@ package io.bhagat.paint;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Instant;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import io.bhagat.paint.items.DrawableItem;
 import io.bhagat.paint.modes.PaintMode;
@@ -24,12 +26,6 @@ public class PaintProgram extends JPanel {
 
     // TODO: convert into enum; loop through with enum.values(); ex: public enum
     // Color { BLACK("bad"); public Color(String good){} }
-    private static final String colors = "BLUE\tRED\tBLACK\tGREEN\tYELLOW\tWHITE";
-    private static final String[] menuBarDefinitions = { "Color\t" + colors,
-            "Modes\t" + String.join("\t", PaintMode.modes), "Thickness\t1\t5\t10\t20\t50\t100" };
-    private static final String[] menuClassDefinitions = { "java.awt.Color", "io.bhagat.paint.modes.{val}Mode",
-            "java.lang.Integer" };
-    private static final String[] menuFieldDefinitions = { "{val}", "instance", "parseInt({val})" };
 
     private JFrame frame;
     private JMenuBar menuBar;
@@ -49,15 +45,12 @@ public class PaintProgram extends JPanel {
 
         menuBar = new JMenuBar();
 
-        for (int k = 0; k < menuBarDefinitions.length; k++) {
-            String menuInfo = menuBarDefinitions[k];
-            String[] arr = menuInfo.split("\t");
-            JMenu menu = new JMenu(arr[0]);
-            final int l = k;
-            for (int i = 1; i < arr.length; i++) {
-                JMenuItem item = new JMenuItem(arr[i]);
-                if (arr[0].equals("Color")) {
-                    Color c = (Color) Util.staticCallFromString("java.awt.Color", arr[i]);
+        for (MenuDefinition menuInfo: MenuDefinition.values()) {
+            JMenu menu = new JMenu(menuInfo.getName());
+            for (int i = 0; i < menuInfo.getSize(); i++) {
+                JMenuItem item = new JMenuItem(menuInfo.getItem(i));
+                if (menuInfo.getName().equals("Color")) {
+                    Color c = (Color) Util.staticCallFromString("java.awt.Color", menuInfo.getItem(i));
                     item.setBackground(c);
                     if (c.getRed() + c.getGreen() * 2 + c.getBlue() < 300)
                         item.setForeground(Color.WHITE);
@@ -67,14 +60,23 @@ public class PaintProgram extends JPanel {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        Object obj = Util.staticCallFromString(menuClassDefinitions[l].replaceAll("\\{val\\}", arr[j]),
-                                menuFieldDefinitions[l].replaceAll("\\{val\\}", arr[j]));
-                        pm.setParam(arr[0].toLowerCase(), obj);
+                        menuInfo.callback(menuInfo.getItem(j));
                     }
 
                 });
                 menu.add(item);
             }
+            JTextField textField = new JTextField("");
+            textField.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    menuInfo.callback(e.getActionCommand());
+                    textField.setText("");
+                }
+                
+            });
+            menu.add(textField);
             menuBar.add(menu);
         }
 
@@ -89,10 +91,13 @@ public class PaintProgram extends JPanel {
 
             @Override
             public void run() {
+                long lastTime = Instant.now().toEpochMilli();
                 while (true) {
 
+                    long curTime = Instant.now().toEpochMilli();
+
                     for(DrawableItem item: pm.getItems())
-                        item.update();
+                        item.update(curTime - lastTime);
 
                     repaint();
                     
@@ -101,6 +106,8 @@ public class PaintProgram extends JPanel {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
+                    lastTime = curTime;
 
                 }
             }
@@ -112,7 +119,7 @@ public class PaintProgram extends JPanel {
         super.paintComponent(graphics);
         Graphics2D g = (Graphics2D) graphics;
 
-        g.setColor(Color.WHITE);
+        g.setColor((Color) pm.getParam("backgroundcolor"));
         g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
 
         for(DrawableItem item: pm.getItems())
