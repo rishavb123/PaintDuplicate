@@ -9,3 +9,5 @@ C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\Stroke.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\EraserMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\LineMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\PaintMode.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\transforms\MatrixTransform.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\transforms\Transform.java
