@@ -10,12 +10,10 @@ import io.bhagat.paint.transforms.Transform;
 
 public enum MenuDefinition {
 
-    ColorMenu(new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
-    ModeMenu(PaintMode.modes, "io.bhagat.paint.modes.{val}Mode", "instance"),
-    ThicknessMenu(new String[] {"1", "5", "10", "20", "50", "100"}, "java.lang.Integer", "parseInt({val})"),
-    BackgroundColorMenu(new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
-    AMenu(Util.strRange(-10, 11, 1), "java.lang.Integer", "parseInt({val})"),
-    RotationsMenu(Util.strRange(-90, 91, 15), new MenuSelectCallback() {
+    ColorMenu("WHITE", new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
+    ModeMenu("Line", PaintMode.modes, "io.bhagat.paint.modes.{val}Mode", "instance"),
+    BackgroundColorMenu("BLACK", new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
+    RotateMenu(null, Util.strRange(-90, 91, 15), new MenuSelectCallback() {
 
         @Override
         public void call(String val) {
@@ -30,7 +28,7 @@ public enum MenuDefinition {
         }
 
     }),
-    ConfigurationsMenu(new String[] {"Play Animations", "Pause Animations", "Clear"}, new MenuSelectCallback() {
+    ConfigurationsMenu("Play Animations", new String[] {"Play Animations", "Pause Animations", "Clear"}, new MenuSelectCallback() {
 
         @Override
         public void call(String val) {
@@ -54,7 +52,7 @@ public enum MenuDefinition {
     private int size;
     private MenuSelectCallback callback;
 
-    MenuDefinition(String[] items, String classDefinition, String fieldDefinition) {
+    private MenuDefinition(String defaultValue, String[] items, String classDefinition, String fieldDefinition) {
         name = name().substring(0, name().length() - 4);
         this.items = items;
         this.size = items.length;
@@ -68,13 +66,17 @@ public enum MenuDefinition {
             }
 
         };
+        if(defaultValue != null)
+            callback(defaultValue);
     }
 
-    MenuDefinition(String[] items, MenuSelectCallback callback) {
+    private MenuDefinition(String defaultValue, String[] items, MenuSelectCallback callback) {
         name = name().substring(0, name().length() - 4);
         this.items = items;
         this.size = items.length;
         this.callback = callback;
+        if(defaultValue != null)
+            callback(defaultValue);
     }
 
     public void callback(String val) {

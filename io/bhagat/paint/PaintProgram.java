@@ -2,21 +2,27 @@ package io.bhagat.paint;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.time.Instant;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 import io.bhagat.paint.items.DrawableItem;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class PaintProgram extends JPanel {
 
@@ -25,6 +31,11 @@ public class PaintProgram extends JPanel {
 
     private JFrame frame;
     private JMenuBar menuBar;
+    private JPanel sliderPanel;
+    private JPanel labelsPanel;
+    private JPanel textFieldsPanel;
+
+    private int numOfSliderParams = SliderDefinition.values().length;
 
     private PaintManager pm = PaintManager.instance;
 
@@ -41,7 +52,11 @@ public class PaintProgram extends JPanel {
 
         menuBar = new JMenuBar();
 
-        for (MenuDefinition menuInfo: MenuDefinition.values()) {
+        sliderPanel = new JPanel(new GridLayout(numOfSliderParams, 1));
+        labelsPanel = new JPanel(new GridLayout(numOfSliderParams, 1));
+        textFieldsPanel = new JPanel(new GridLayout(numOfSliderParams, 1));
+
+        for (MenuDefinition menuInfo : MenuDefinition.values()) {
             JMenu menu = new JMenu(menuInfo.getName());
             for (int i = 0; i < menuInfo.getSize(); i++) {
                 JMenuItem item = new JMenuItem(menuInfo.getItem(i));
@@ -70,15 +85,69 @@ public class PaintProgram extends JPanel {
                     menuInfo.callback(e.getActionCommand());
                     textField.setText("");
                 }
-                
+
             });
             menu.add(textField);
             menuBar.add(menu);
         }
 
+        final JPanel root = this;
+
+        for (SliderDefinition sliderInfo : SliderDefinition.values()) {
+            JLabel label = new JLabel("    " + sliderInfo.getName() + " :     ");
+            JTextField textField = new JTextField(Double.toString(sliderInfo.getDefaultValue()), 10);
+            JScrollBar scrollBar = new JScrollBar(JScrollBar.HORIZONTAL,
+                    (int) (sliderInfo.getDefaultValue() * sliderInfo.getPrecision()), 0,
+                    (int) (sliderInfo.getStart() * sliderInfo.getPrecision()),
+                    (int) (sliderInfo.getEnd() * sliderInfo.getPrecision()));
+            scrollBar.addAdjustmentListener(new AdjustmentListener() {
+
+                @Override
+                public void adjustmentValueChanged(AdjustmentEvent e) {
+                    double val = (double) e.getValue() / sliderInfo.getPrecision();
+                    sliderInfo.callback(val);
+                    textField.setText(Double.toString(val));
+                }
+                
+            });
+            textField.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        double value = (int) (Double.parseDouble(e.getActionCommand()) * sliderInfo.getPrecision()) / (double) sliderInfo.getPrecision();
+                        if(value < sliderInfo.getStart()) value = sliderInfo.getStart();
+                        else if(value > sliderInfo.getEnd()) value = sliderInfo.getEnd();
+                        sliderInfo.callback(value);
+                        textField.setText(Double.toString(value));
+                        scrollBar.setValue((int) (value * sliderInfo.getPrecision()));
+                    } catch(NumberFormatException exception) {
+                        JOptionPane.showMessageDialog(root, "Invalid Input", "Error", JOptionPane.ERROR_MESSAGE);
+                        textField.setText("");
+                    }
+                }
+                
+            });
+
+            labelsPanel.add(label);
+            textFieldsPanel.add(textField);
+            sliderPanel.add(scrollBar);
+        }
+
         addMouseListener(pm.getMouseListener());
         addMouseMotionListener(pm.getMouseMotionListener());
+
+        JPanel leftPanel = new JPanel(new GridLayout(1, 2));
+        leftPanel.add(labelsPanel);
+        leftPanel.add(textFieldsPanel);
+
+        JPanel panelsPanel = new JPanel(new BorderLayout());
+        panelsPanel.add(leftPanel, BorderLayout.WEST);
+        panelsPanel.add(sliderPanel, BorderLayout.CENTER);
+        
+        frame.add(panelsPanel, BorderLayout.SOUTH);
         frame.add(menuBar, BorderLayout.NORTH);
+
         frame.setVisible(true);
 
         mousePosition = new Point(0, 0);

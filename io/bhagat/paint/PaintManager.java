@@ -29,12 +29,6 @@ public class PaintManager {
         items = new ArrayList<>();
         params = new HashMap<>();
 
-        params.put("color", Color.WHITE);
-        params.put("mode", LineMode.instance);
-        params.put("thickness", 5);
-        params.put("backgroundcolor", Color.BLACK);
-        params.put("playing", true);
-
         mouseListener = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
