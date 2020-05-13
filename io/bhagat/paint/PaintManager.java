@@ -1,6 +1,5 @@
 package io.bhagat.paint;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseListener;
@@ -12,7 +11,6 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import io.bhagat.paint.items.DrawableItem;
-import io.bhagat.paint.modes.LineMode;
 import io.bhagat.paint.modes.PaintMode;
 
 public class PaintManager {
