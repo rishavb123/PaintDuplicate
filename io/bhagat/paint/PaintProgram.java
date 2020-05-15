@@ -134,6 +134,8 @@ public class PaintProgram extends JPanel {
             sliderPanel.add(scrollBar);
         }
 
+        setFocusable(true);
+        addKeyListener(pm.getKeyListener());
         addMouseListener(pm.getMouseListener());
         addMouseMotionListener(pm.getMouseMotionListener());
 

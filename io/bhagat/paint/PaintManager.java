@@ -3,6 +3,8 @@ package io.bhagat.paint;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ public class PaintManager {
 
     private MouseListener mouseListener;
     private MouseMotionListener mouseMotionListener;
+    private KeyListener keyListener;
 
     public PaintManager() {
         items = new ArrayList<>();
@@ -72,6 +75,27 @@ public class PaintManager {
             }
 
         };
+        keyListener = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				((PaintMode) params.get("mode")).keyTyped(e);
+                PaintProgram.instance.repaint();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				((PaintMode) params.get("mode")).keyPressed(e);
+                PaintProgram.instance.repaint();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				((PaintMode) params.get("mode")).keyReleased(e);
+                PaintProgram.instance.repaint();
+			}
+
+        };
 
     }
         
@@ -85,6 +109,10 @@ public class PaintManager {
 
     public MouseMotionListener getMouseMotionListener() {
         return mouseMotionListener;
+    }
+
+    public KeyListener getKeyListener() {
+        return keyListener;
     }
 
     public List<DrawableItem> getItems() {
