@@ -11,8 +11,9 @@ import io.bhagat.paint.transforms.Transform;
 public enum MenuDefinition {
 
     ColorMenu("WHITE", new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
-    ModeMenu("Line", PaintMode.modes, "io.bhagat.paint.modes.{val}Mode", "instance"),
+    ModeMenu("FreeStroke", PaintMode.modes, "io.bhagat.paint.modes.{val}Mode", "instance"),
     BackgroundColorMenu("BLACK", new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
+    FillMenu("FALSE", new String[] {"FALSE", "TRUE"}, "java.lang.Boolean", "{val}"),
     RotateMenu(null, Util.strRange(-90, 91, 15), new MenuSelectCallback() {
 
         @Override
