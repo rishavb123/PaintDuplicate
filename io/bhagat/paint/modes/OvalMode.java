@@ -27,13 +27,16 @@ public class OvalMode extends PaintMode {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // System.out.println(e.getKeyCode());
         if(e.getKeyCode() == 32) {
+            int cx = curOval.getX() + curOval.getWidth() / 2;
+            int cy = curOval.getY() + curOval.getHeight() / 2;
             int w = curOval.getWidth();
             int h = curOval.getHeight();
-            int newDim = (w + h) / 2;
-            curOval.setWidth(newDim);
-            curOval.setHeight(newDim);
+            int newDim = Math.max(Math.abs(w), Math.abs(h));
+            curOval.setWidth(w * newDim / Math.abs(w));
+            curOval.setHeight(h * newDim / Math.abs(h));
+            curOval.setX(cx - curOval.getWidth() / 2);
+            curOval.setY(cy - curOval.getHeight() / 2);
         }
     }
 
