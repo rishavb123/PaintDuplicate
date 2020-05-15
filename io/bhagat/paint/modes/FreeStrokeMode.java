@@ -6,9 +6,9 @@ import java.awt.event.MouseEvent;
 import io.bhagat.paint.PaintManager;
 import io.bhagat.paint.items.Stroke;
 
-public class LineMode extends PaintMode {
+public class FreeStrokeMode extends PaintMode {
 
-    public static LineMode instance = new LineMode();
+    public static FreeStrokeMode instance = new FreeStrokeMode();
 
     protected Stroke curStroke;
 

@@ -6,7 +6,7 @@ import io.bhagat.paint.items.FloatingStroke;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
-public class FloatingMode extends LineMode {
+public class FloatingMode extends FreeStrokeMode {
 
     public static FloatingMode instance = new FloatingMode();
 

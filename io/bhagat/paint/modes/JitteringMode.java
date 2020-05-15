@@ -6,7 +6,7 @@ import io.bhagat.paint.items.JitteringStroke;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
-public class JitteringMode extends LineMode {
+public class JitteringMode extends FreeStrokeMode {
 
     public static JitteringMode instance = new JitteringMode();
 

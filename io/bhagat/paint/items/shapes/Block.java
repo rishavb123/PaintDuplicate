@@ -10,7 +10,6 @@ public class Block extends Shape {
 
     public Block(int x, int y, int w, int h, Color color, int thickness, boolean fill) {
         super(x, y, w, h, color, thickness);
-        this.fill = fill;
     }
 
     @Override
