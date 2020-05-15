@@ -23,5 +23,10 @@ public class FreeStrokeMode extends PaintMode {
         curStroke.add(e.getX(), e.getY());
         PaintManager.instance.add(curStroke);
     }
+
+    @Override
+    public String toString() {
+        return "<html><center>This is the free stroke mode. <br /> You can draw whatever you want here.</center></html>";
+    }
     
 }

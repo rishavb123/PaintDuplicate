@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.Instant;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,6 +22,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 import io.bhagat.paint.items.DrawableItem;
+import io.bhagat.paint.modes.PaintMode;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -34,6 +37,7 @@ public class PaintProgram extends JPanel {
     private JPanel sliderPanel;
     private JPanel labelsPanel;
     private JPanel textFieldsPanel;
+    private JLabel instructions;
 
     private int numOfSliderParams = SliderDefinition.values().length;
 
@@ -50,6 +54,7 @@ public class PaintProgram extends JPanel {
         frame.add(this);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        instructions = new JLabel();
         menuBar = new JMenuBar();
 
         sliderPanel = new JPanel(new GridLayout(numOfSliderParams, 1));
@@ -154,14 +159,24 @@ public class PaintProgram extends JPanel {
 
         mousePosition = new Point(0, 0);
 
+        add(instructions, BorderLayout.SOUTH);
+
         new Thread(new Runnable() {
 
             @Override
             public void run() {
                 long lastTime = Instant.now().toEpochMilli();
                 while (true) {
-
                     long curTime = Instant.now().toEpochMilli();
+
+                    instructions.setText(((PaintMode)pm.getParam("mode")).toString());
+                    Color backgroundColor = (Color) pm.getParam("backgroundcolor");
+                    Color complement = new Color(255 - backgroundColor.getRed(),
+                        255 - backgroundColor.getGreen(),
+                        255 - backgroundColor.getBlue());
+                    instructions.setForeground(complement);
+
+                    instructions.setVisible((boolean) pm.getParam("showinstructions"));
 
                     if((boolean) pm.getParam("playing"))
                         for(DrawableItem item: pm.getItems())

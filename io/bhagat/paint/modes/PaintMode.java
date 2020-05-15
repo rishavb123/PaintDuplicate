@@ -34,4 +34,9 @@ public abstract class PaintMode implements MouseMotionListener, MouseListener, K
     @Override
     public void keyTyped(KeyEvent e){}
 
+    @Override
+    public String toString() {
+        return "";
+    }
+
 }

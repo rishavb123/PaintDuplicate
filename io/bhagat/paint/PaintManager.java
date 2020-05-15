@@ -30,6 +30,8 @@ public class PaintManager {
         items = new ArrayList<>();
         params = new HashMap<>();
 
+        params.put("showinstructions", true);
+
         mouseListener = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
