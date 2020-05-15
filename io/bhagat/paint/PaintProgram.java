@@ -18,10 +18,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import io.bhagat.paint.items.DrawableItem;
-import io.bhagat.paint.modes.PaintMode;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
