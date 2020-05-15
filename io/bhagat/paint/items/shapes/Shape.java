@@ -1,7 +1,6 @@
 package io.bhagat.paint.items.shapes;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import io.bhagat.paint.Point;
