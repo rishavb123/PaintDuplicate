@@ -54,4 +54,9 @@ public class SnowflakeMode extends PaintMode {
         }
     }
 
+    @Override
+    public String toString() {
+        return "<html><center>This mode is another extension of free stroke, but it will apply the snowflake effect on your drawing by copying and rotating your drawing around a circle. <br /> Modify A to change the number of sides on your snowflake </center></html>";
+    }
+
 }

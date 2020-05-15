@@ -18,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 import io.bhagat.paint.items.DrawableItem;
 import io.bhagat.paint.modes.PaintMode;
@@ -167,7 +168,7 @@ public class PaintProgram extends JPanel {
                 while (true) {
                     long curTime = Instant.now().toEpochMilli();
 
-                    instructions.setText(((PaintMode)pm.getParam("mode")).toString());
+                    instructions.setText(pm.getParam("mode").toString());
                     Color backgroundColor = (Color) pm.getParam("backgroundcolor");
                     Color complement = new Color(255 - backgroundColor.getRed(),
                         255 - backgroundColor.getGreen(),

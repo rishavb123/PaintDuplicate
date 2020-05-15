@@ -24,4 +24,9 @@ public class LineMode extends PaintMode {
         PaintManager.instance.add(curLine);
     }
 
+    @Override
+    public String toString() {
+        return "Draw perfectly straight lines by dragging your mouse from one point to another.";
+    }
+
 }

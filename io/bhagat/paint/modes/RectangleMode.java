@@ -24,4 +24,9 @@ public class RectangleMode extends PaintMode {
         PaintManager.instance.add(curRectangle);
     }
 
+    @Override
+    public String toString() {
+        return "Draw rectangles by drawing your mouse from one corner to another.";
+    }
+
 }

@@ -26,7 +26,7 @@ public class FreeStrokeMode extends PaintMode {
 
     @Override
     public String toString() {
-        return "<html><center>This is the free stroke mode. <br /> You can draw whatever you want here.</center></html>";
+        return "Draw whatever you want here. To mess with the color, thickness, rotations, and more check the menus above and scrollbars below.";
     }
     
 }

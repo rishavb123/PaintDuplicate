@@ -15,4 +15,9 @@ public class FloatingMode extends FreeStrokeMode {
         curStroke = new FloatingStroke((Color) PaintManager.instance.getParam("color"), (int) PaintManager.instance.getParam("thickness"));
         PaintManager.instance.add(curStroke);
     }
+
+    @Override
+    public String toString() {
+        return "<html><center>Draw whatever you like just like in Free Stroke Mode, but these items will start to float around as you are drawing. <br /> Remember the configurations menu can pause and play the animations.</center><html>";
+    }
 }

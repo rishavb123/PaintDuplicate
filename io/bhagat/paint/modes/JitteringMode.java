@@ -15,4 +15,9 @@ public class JitteringMode extends FreeStrokeMode {
         curStroke = new JitteringStroke((Color) PaintManager.instance.getParam("color"), (int) PaintManager.instance.getParam("thickness"));
         PaintManager.instance.add(curStroke);
     }
+
+    @Override
+    public String toString() {
+        return "<html><center>This is another extension of the free stroke mode where everything each point jitters randomly as you are drawing. <br /> Increase the magnitude of A to speed up or slow down the jittering. <br />Remember the configurations menu can pause and play the animations.</center></html>";
+    }
 }
