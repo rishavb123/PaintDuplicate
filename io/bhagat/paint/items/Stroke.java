@@ -40,7 +40,7 @@ public class Stroke extends DrawableItem {
     }
 
     public void add(int x, int y) {
-        points.add(new Point(x, y));
+        add(new Point(x, y));
     } 
 
     public void add(Point point) {
@@ -61,6 +61,10 @@ public class Stroke extends DrawableItem {
             Point p = points.get(0);
             g.fillOval(p.getGx(), p.getGy(), (int)thickness, (int)thickness);
         }
+    }
+
+    public float getThickness() {
+        return thickness;
     }
     
     public Color getColor() {
