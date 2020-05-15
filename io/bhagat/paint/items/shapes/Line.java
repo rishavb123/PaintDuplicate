@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 public class Line extends Shape {
 
-    public Line(int x, int y, int w, int h, Color color, int thickness, boolean fill) {
+    public Line(int x, int y, int w, int h, Color color, int thickness) {
         super(x, y, w, h, color, thickness);
     }
 
