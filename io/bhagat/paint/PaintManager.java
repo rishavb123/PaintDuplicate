@@ -6,9 +6,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
@@ -19,7 +18,8 @@ public class PaintManager {
 
     public static PaintManager instance = new PaintManager();
 
-    private List<DrawableItem> items;
+    private Stack<DrawableItem> items;
+    private Stack<DrawableItem> removedItems;
     private Map<Object, Object> params;
 
     private MouseListener mouseListener;
@@ -27,7 +27,8 @@ public class PaintManager {
     private KeyListener keyListener;
 
     public PaintManager() {
-        items = new ArrayList<>();
+        items = new Stack<>();
+        removedItems = new Stack<>();
         params = new HashMap<>();
 
         params.put("showinstructions", true);
@@ -102,7 +103,25 @@ public class PaintManager {
     }
         
     public void add(DrawableItem item) {
-        items.add(item);
+        items.push(item);
+        if(removedItems.size() > 0) removedItems.clear();
+    }
+
+    public void undo() {
+        if(items.size() > 0) {
+            removedItems.push(items.pop());
+        }
+    }
+
+    public void clear() {
+        items.clear();
+        removedItems.clear();
+    }
+
+    public void redo() {
+        if(removedItems.size() > 0) {
+            items.push(removedItems.pop());
+        }
     }
 
     public MouseListener getMouseListener() {
@@ -117,7 +136,7 @@ public class PaintManager {
         return keyListener;
     }
 
-    public List<DrawableItem> getItems() {
+    public Stack<DrawableItem> getItems() {
         return items;
     }
 

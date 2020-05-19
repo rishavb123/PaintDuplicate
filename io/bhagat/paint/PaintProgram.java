@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -18,6 +19,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import io.bhagat.paint.items.DrawableItem;
 
@@ -79,17 +82,31 @@ public class PaintProgram extends JPanel {
                 });
                 menu.add(item);
             }
-            JTextField textField = new JTextField("");
-            textField.addActionListener(new ActionListener() {
+            
+            if(menuInfo.getName().equals("Color")) {
+                JColorChooser colorChooser = new JColorChooser();
+                colorChooser.getSelectionModel().addChangeListener(new ChangeListener(){
+                
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                         pm.setParam("color", colorChooser.getColor());
+                    }
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    menuInfo.callback(e.getActionCommand());
-                    textField.setText("");
-                }
+                });
+                menu.add(colorChooser);
+            } else {
+                JTextField textField = new JTextField("");
+                textField.addActionListener(new ActionListener() {
 
-            });
-            menu.add(textField);
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        menuInfo.callback(e.getActionCommand());
+                        textField.setText("");
+                    }
+
+                });
+                menu.add(textField);
+            }
             menuBar.add(menu);
         }
 
