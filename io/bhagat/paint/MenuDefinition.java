@@ -10,6 +10,25 @@ import io.bhagat.paint.transforms.Transform;
 
 public enum MenuDefinition {
 
+    FileMenu(null, new String[] {"Save", "Load", "Export Image", "Load Image"}, new MenuSelectCallback() {
+
+        @Override
+        public void call(String val) {
+            switch(val) {
+                case "Save": 
+                    break;
+                case "Load":
+                    break;
+                case "Export Image":
+                    PaintProgram.instance.export();
+                    break;
+                case "Load Image":
+                    PaintProgram.instance.importImage();
+                    break;
+            }
+        }
+
+    }),
     ColorMenu("WHITE", new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
     ModeMenu("FreeStroke", PaintMode.modes, "io.bhagat.paint.modes.{val}Mode", "instance"),
     BackgroundColorMenu("BLACK", new String[] {"BLUE", "RED", "BLACK", "GREEN", "YELLOW", "WHITE"}, "java.awt.Color", "{val}"),
