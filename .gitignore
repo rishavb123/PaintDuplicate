@@ -3,3 +3,6 @@ build
 Test.java
 Test.class
 test.bat
+*.png
+*.jpeg
+*.jpg
