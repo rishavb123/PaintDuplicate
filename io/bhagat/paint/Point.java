@@ -1,6 +1,6 @@
 package io.bhagat.paint;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import io.bhagat.math.linearalgebra.Vector;
 
@@ -8,7 +8,7 @@ public class Point extends Vector {
 
     private static final long serialVersionUID = 6961128081816895929L;
 
-    public static JFrame frame = PaintProgram.instance.getFrame();
+    public static JPanel canvas = PaintProgram.instance;
     
     public Point(double x, double y) {
         super(2);
@@ -17,7 +17,7 @@ public class Point extends Vector {
     }
 
     public Point(int x, int y) {
-        this((double) x / frame.getWidth() - 0.5, (double) y / frame.getHeight() - 0.5);
+        this((double) x / canvas.getWidth() - 0.5, (double) y / canvas.getHeight() - 0.5);
     }
 
     public Point(Vector vec) {
@@ -41,19 +41,19 @@ public class Point extends Vector {
     }
 
     public int getGx() {
-        return (int) (frame.getWidth() * (getX() + 0.5));
+        return (int) (canvas.getWidth() * (getX() + 0.5));
     }
 
     public int getGy() {
-        return (int) (frame.getHeight() * (getY() + 0.5));
+        return (int) (canvas.getHeight() * (getY() + 0.5));
     }
 
     public void setGx(int x) {
-        setX((double) x / frame.getWidth() - 0.5);
+        setX((double) x / canvas.getWidth() - 0.5);
     }
 
     public void setGy(int y) {
-        setY((double) y / frame.getHeight() - 0.5);
+        setY((double) y / canvas.getHeight() - 0.5);
     }
 
     @Override
