@@ -4,23 +4,20 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import io.bhagat.paint.Point;
+import io.bhagat.paint.items.shapes.Shape;
 
-public class ImageItem extends DrawableItem {
+public class ImageItem extends Shape {
 
     private BufferedImage image;
-    private Point position;
-    private Point dimension;
 
     public ImageItem(BufferedImage image, int x, int y, int w, int h) {
+        super(x, y, w, h, null, 0);
         this.image = image;
-        position = new Point(x, y);
-        dimension = new Point(w, h);
     }
     
     @Override
     public void draw(Graphics2D g) {
-        g.drawImage(resize(image, dimension.getGx(), dimension.getGy()), null, position.getGx(), position.getGy());
+        g.drawImage(resize(image, getWidth(), getHeight()), null, getX(), getY());
     }
 
     public static BufferedImage resize(BufferedImage img, int newW, int newH) { 
