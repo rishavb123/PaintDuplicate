@@ -89,7 +89,7 @@ public class PaintProgram extends JPanel {
             JMenu menu = new JMenu(menuInfo.getName());
             for (int i = 0; i < menuInfo.getSize(); i++) {
                 JMenuItem item = new JMenuItem(menuInfo.getItem(i));
-                if (menuInfo.getName().equals("Color")) {
+                if (menuInfo.getName().contains("Color")) {
                     Color c = (Color) Util.staticCallFromString("java.awt.Color", menuInfo.getItem(i));
                     item.setBackground(c);
                     if (c.getRed() + c.getGreen() * 2 + c.getBlue() < 300)
@@ -107,13 +107,13 @@ public class PaintProgram extends JPanel {
                 menu.add(item);
             }
 
-            if (menuInfo.getName().equals("Color")) {
+            if (menuInfo.getName().contains("Color")) {
                 JColorChooser colorChooser = new JColorChooser();
                 colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
 
                     @Override
                     public void stateChanged(ChangeEvent e) {
-                        pm.setParam("color", colorChooser.getColor());
+                        pm.setParam(menuInfo.getName().toLowerCase(), colorChooser.getColor());
                     }
 
                 });
