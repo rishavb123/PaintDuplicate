@@ -10,8 +10,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -23,6 +29,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import io.bhagat.paint.items.DrawableItem;
+import io.bhagat.paint.items.ImageItem;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -45,6 +52,8 @@ public class PaintProgram extends JPanel {
 
     private Point mousePosition;
 
+    private JFileChooser fileChooser;
+
     public PaintProgram() {
 
         instance = this;
@@ -56,6 +65,9 @@ public class PaintProgram extends JPanel {
 
         instructions = new JLabel();
         menuBar = new JMenuBar();
+
+        fileChooser = new JFileChooser(System.getProperty("user.dir"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "png", "jpg", "jpeg"));
 
         sliderPanel = new JPanel(new GridLayout(numOfSliderParams, 1));
         labelsPanel = new JPanel(new GridLayout(numOfSliderParams, 1));
@@ -82,14 +94,14 @@ public class PaintProgram extends JPanel {
                 });
                 menu.add(item);
             }
-            
-            if(menuInfo.getName().equals("Color")) {
+
+            if (menuInfo.getName().equals("Color")) {
                 JColorChooser colorChooser = new JColorChooser();
-                colorChooser.getSelectionModel().addChangeListener(new ChangeListener(){
-                
+                colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
+
                     @Override
                     public void stateChanged(ChangeEvent e) {
-                         pm.setParam("color", colorChooser.getColor());
+                        pm.setParam("color", colorChooser.getColor());
                     }
 
                 });
@@ -127,25 +139,28 @@ public class PaintProgram extends JPanel {
                     sliderInfo.callback(val);
                     textField.setText(Double.toString(val));
                 }
-                
+
             });
             textField.addActionListener(new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        double value = (int) (Double.parseDouble(e.getActionCommand()) * sliderInfo.getPrecision()) / (double) sliderInfo.getPrecision();
-                        if(value < sliderInfo.getStart()) value = sliderInfo.getStart();
-                        else if(value > sliderInfo.getEnd()) value = sliderInfo.getEnd();
+                        double value = (int) (Double.parseDouble(e.getActionCommand()) * sliderInfo.getPrecision())
+                                / (double) sliderInfo.getPrecision();
+                        if (value < sliderInfo.getStart())
+                            value = sliderInfo.getStart();
+                        else if (value > sliderInfo.getEnd())
+                            value = sliderInfo.getEnd();
                         sliderInfo.callback(value);
                         textField.setText(Double.toString(value));
                         scrollBar.setValue((int) (value * sliderInfo.getPrecision()));
-                    } catch(NumberFormatException exception) {
+                    } catch (NumberFormatException exception) {
                         JOptionPane.showMessageDialog(root, "Invalid Input", "Error", JOptionPane.ERROR_MESSAGE);
                         textField.setText("");
                     }
                 }
-                
+
             });
 
             labelsPanel.add(label);
@@ -165,7 +180,7 @@ public class PaintProgram extends JPanel {
         JPanel panelsPanel = new JPanel(new BorderLayout());
         panelsPanel.add(leftPanel, BorderLayout.WEST);
         panelsPanel.add(sliderPanel, BorderLayout.CENTER);
-        
+
         frame.add(panelsPanel, BorderLayout.SOUTH);
         frame.add(menuBar, BorderLayout.NORTH);
 
@@ -185,19 +200,18 @@ public class PaintProgram extends JPanel {
 
                     instructions.setText(pm.getParam("mode").toString());
                     Color backgroundColor = (Color) pm.getParam("backgroundcolor");
-                    Color complement = new Color(255 - backgroundColor.getRed(),
-                        255 - backgroundColor.getGreen(),
-                        255 - backgroundColor.getBlue());
+                    Color complement = new Color(255 - backgroundColor.getRed(), 255 - backgroundColor.getGreen(),
+                            255 - backgroundColor.getBlue());
                     instructions.setForeground(complement);
 
                     instructions.setVisible((boolean) pm.getParam("showinstructions"));
 
-                    if((boolean) pm.getParam("playing"))
-                        for(DrawableItem item: pm.getItems())
+                    if ((boolean) pm.getParam("playing"))
+                        for (DrawableItem item : pm.getItems())
                             item.update(curTime - lastTime);
 
                     repaint();
-                    
+
                     try {
                         Thread.sleep(50);
                     } catch (InterruptedException e) {
@@ -219,7 +233,7 @@ public class PaintProgram extends JPanel {
         g.setColor((Color) pm.getParam("backgroundcolor"));
         g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
 
-        for(DrawableItem item: pm.getItems())
+        for (DrawableItem item : pm.getItems())
             item.draw(g);
     }
 
@@ -231,6 +245,51 @@ public class PaintProgram extends JPanel {
         return mousePosition;
     }
 
+    public BufferedImage createImage() {
+        instructions.setVisible(false);
+
+        BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        Graphics2D g = image.createGraphics();
+        paint(g);
+        g.dispose();
+
+        return image;
+    }
+
+    public void export() {
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            String extension;
+            String[] arr = path.split(".");
+
+            if (arr.length < 2) {
+                extension = "png";
+                path += ".png";
+            } else
+                extension = arr[1];
+
+            try {
+                ImageIO.write(createImage(), extension, new File(path));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void importImage() {
+        fileChooser.showOpenDialog(null);
+        File file = fileChooser.getSelectedFile();
+        try {
+            BufferedImage image = ImageIO.read(file);
+            pm.clear();
+            pm.add(new ImageItem(image, 0, 0, getWidth(), getHeight()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static void main(String[] args) {
         new PaintProgram();
     }

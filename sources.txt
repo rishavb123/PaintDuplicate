@@ -9,6 +9,7 @@ C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\Curve.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\DrawableItem.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\EraserMark.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\FloatingStroke.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\ImageItem.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\JitteringStroke.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\Stroke.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\items\shapes\Block.java
