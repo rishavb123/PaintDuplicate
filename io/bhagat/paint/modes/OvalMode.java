@@ -42,7 +42,7 @@ public class OvalMode extends PaintMode {
 
     @Override
     public String toString() {
-        return "<html><center>Draw ovals by drawing your mouse from one corner to another. These two points will define the opposite corners of the bounding rectangle. <br /> Press the spacebar key to make your oval a perfect circle </center></html>";
+        return "<html><center>Draw ovals by dragging your mouse from one corner to another. These two points will define the opposite corners of the bounding rectangle. <br /> Press the spacebar key to make your oval a perfect circle </center></html>";
     }
 
 }

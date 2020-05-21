@@ -26,7 +26,7 @@ public class RectangleMode extends PaintMode {
 
     @Override
     public String toString() {
-        return "Draw rectangles by drawing your mouse from one corner to another.";
+        return "Draw rectangles by dragging your mouse from one corner to another.";
     }
 
 }
