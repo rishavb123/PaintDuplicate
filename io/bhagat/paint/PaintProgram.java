@@ -279,14 +279,22 @@ public class PaintProgram extends JPanel {
     }
 
     public void importImage() {
+        BufferedImage image = openImage();
+        if(image != null) {
+            pm.clear();
+            pm.add(new ImageItem(image, 0, 0, getWidth(), getHeight()));
+        }
+    }
+
+    public BufferedImage openImage() {
         fileChooser.showOpenDialog(null);
         File file = fileChooser.getSelectedFile();
         try {
             BufferedImage image = ImageIO.read(file);
-            pm.clear();
-            pm.add(new ImageItem(image, 0, 0, getWidth(), getHeight()));
+            return image;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
     
