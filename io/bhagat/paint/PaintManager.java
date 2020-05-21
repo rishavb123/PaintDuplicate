@@ -2,6 +2,7 @@ package io.bhagat.paint;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.Serializable;
 import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -101,7 +102,16 @@ public class PaintManager {
         };
 
     }
-        
+
+    public SaveObject makeSaveObject() {
+        return new SaveObject();
+    }
+
+    public void loadSaveObject(SaveObject obj) {
+        items = obj.itms;
+        removedItems = obj.rmvdItms;
+    }
+
     public void add(DrawableItem item) {
         items.push(item);
         if(removedItems.size() > 0) removedItems.clear();
@@ -149,6 +159,17 @@ public class PaintManager {
             JOptionPane.showMessageDialog(PaintProgram.instance, "Invalid Input", "Error", JOptionPane.ERROR_MESSAGE);
         else
             params.put(key, value);
+    }
+
+    public class SaveObject implements Serializable {
+        public Stack<DrawableItem> itms;
+        public Stack<DrawableItem> rmvdItms;
+
+        public SaveObject() {
+            this.itms = items;
+            this.rmvdItms = removedItems;
+        }
+
     }
 
 }

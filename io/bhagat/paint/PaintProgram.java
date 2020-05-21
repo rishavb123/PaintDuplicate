@@ -12,7 +12,12 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.imageio.ImageIO;
@@ -28,8 +33,10 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import io.bhagat.paint.PaintManager.SaveObject;
 import io.bhagat.paint.items.DrawableItem;
 import io.bhagat.paint.items.ImageItem;
+import io.bhagat.util.SerializableUtil;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -38,21 +45,23 @@ public class PaintProgram extends JPanel {
 
     private static final long serialVersionUID = 2243648409907110137L;
     public static PaintProgram instance;
-
+    
     private JFrame frame;
     private JMenuBar menuBar;
     private JPanel sliderPanel;
     private JPanel labelsPanel;
     private JPanel textFieldsPanel;
     private JLabel instructions;
-
+    
     private int numOfSliderParams = SliderDefinition.values().length;
-
+    
     private PaintManager pm = PaintManager.instance;
-
+    
     private Point mousePosition;
-
-    private JFileChooser fileChooser;
+    
+    private JFileChooser imageFileChooser;
+    private JFileChooser serializeFileChooser;
+    public File curFile;
 
     public PaintProgram() {
 
@@ -66,8 +75,11 @@ public class PaintProgram extends JPanel {
         instructions = new JLabel();
         menuBar = new JMenuBar();
 
-        fileChooser = new JFileChooser(System.getProperty("user.dir"));
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "png", "jpg", "jpeg"));
+        imageFileChooser = new JFileChooser(System.getProperty("user.dir"));
+        imageFileChooser.setFileFilter(new FileNameExtensionFilter("Image Files", "png", "jpg", "jpeg"));
+
+        serializeFileChooser = new JFileChooser(System.getProperty("user.dir"));
+        serializeFileChooser.setFileFilter(new FileNameExtensionFilter("Paint Files", "paint", "pnt"));
 
         sliderPanel = new JPanel(new GridLayout(numOfSliderParams, 1));
         labelsPanel = new JPanel(new GridLayout(numOfSliderParams, 1));
@@ -258,8 +270,8 @@ public class PaintProgram extends JPanel {
     }
 
     public void export() {
-        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
+        if (imageFileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = imageFileChooser.getSelectedFile();
             String path = file.getAbsolutePath();
             String extension;
             String[] arr = path.split(".");
@@ -286,9 +298,58 @@ public class PaintProgram extends JPanel {
         }
     }
 
+    public void open() {
+        serializeFileChooser.showOpenDialog(null);
+        File file = serializeFileChooser.getSelectedFile();
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+            pm.loadSaveObject((PaintManager.SaveObject) objectInputStream.readObject());
+
+            objectInputStream.close();
+            fileInputStream.close();
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void save() {
+        if(curFile == null) {
+            saveas();
+            return;
+        }
+    }
+
+    public void saveas() {
+        if (serializeFileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = serializeFileChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            String[] arr = path.split(".");
+
+            if (arr.length < 2)
+                path += ".paint";
+
+            try {
+                Serializable obj = pm.makeSaveObject();
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+                objectOutputStream.writeObject(obj);
+
+                objectOutputStream.close();
+                fileOutputStream.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public BufferedImage openImage() {
-        fileChooser.showOpenDialog(null);
-        File file = fileChooser.getSelectedFile();
+        imageFileChooser.showOpenDialog(null);
+        File file = imageFileChooser.getSelectedFile();
         try {
             BufferedImage image = ImageIO.read(file);
             return image;

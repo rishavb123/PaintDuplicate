@@ -10,14 +10,19 @@ import io.bhagat.paint.transforms.Transform;
 
 public enum MenuDefinition {
 
-    FileMenu(null, new String[] {"Save", "Load", "Export Image", "Load Image"}, new MenuSelectCallback() {
+    FileMenu(null, new String[] {"Save", "Save As", "Open", "Export Image", "Load Image"}, new MenuSelectCallback() {
 
         @Override
         public void call(String val) {
             switch(val) {
                 case "Save": 
+                    PaintProgram.instance.save();
                     break;
-                case "Load":
+                case "Save As":
+                    PaintProgram.instance.saveas();
+                    break;
+                case "Open":
+                    PaintProgram.instance.open();
                     break;
                 case "Export Image":
                     PaintProgram.instance.export();
