@@ -20,6 +20,7 @@ C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\CurveMode.jav
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\EraserMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\FloatingMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\FreeStrokeMode.java
+C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\ImageMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\JitteringMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\LineMode.java
 C:\Projects\UniversalProjects\PaintDuplicate\io\bhagat\paint\modes\OvalMode.java
