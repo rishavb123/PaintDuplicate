@@ -10,7 +10,9 @@ import java.util.List;
 import io.bhagat.paint.Point;
 
 public class Stroke extends DrawableItem {
-    
+
+    private static final long serialVersionUID = 1066391382504640977L;
+
     private List<Point> points;
     private Color color;
     private float thickness;

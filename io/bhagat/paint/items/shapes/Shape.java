@@ -8,6 +8,8 @@ import io.bhagat.paint.items.DrawableItem;
 
 public abstract class Shape extends DrawableItem {
 
+    private static final long serialVersionUID = 4181503817993265800L;
+
     private Point position;
     private Point dimensions;
     private Color color;

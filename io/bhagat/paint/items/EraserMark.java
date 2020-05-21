@@ -6,6 +6,8 @@ import io.bhagat.paint.PaintManager;
 
 public class EraserMark extends Stroke {
 
+    private static final long serialVersionUID = -9080597264388540816L;
+
     public EraserMark(int thickness) {
         super(thickness);
     }

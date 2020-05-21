@@ -8,6 +8,8 @@ import io.bhagat.paint.items.shapes.Shape;
 
 public class ImageItem extends Shape {
 
+    private static final long serialVersionUID = 3471374941867374357L;
+
     private BufferedImage image;
 
     public ImageItem(BufferedImage image, int x, int y, int w, int h) {

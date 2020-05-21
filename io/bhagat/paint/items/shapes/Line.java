@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 
 public class Line extends Shape {
 
+    private static final long serialVersionUID = -2502776286815759294L;
+
     public Line(int x, int y, int w, int h, Color color, int thickness) {
         super(x, y, w, h, color, thickness);
     }

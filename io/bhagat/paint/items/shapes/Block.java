@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 
 public class Block extends Shape {
 
+    private static final long serialVersionUID = 8353526969602365524L;
+
     private boolean fill;
 
     public Block(int x, int y, int w, int h, Color color, int thickness, boolean fill) {

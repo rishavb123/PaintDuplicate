@@ -8,6 +8,8 @@ import io.bhagat.paint.transforms.Transform;
 
 public class FloatingStroke extends Stroke {
 
+    private static final long serialVersionUID = 3333520019955401992L;
+
     private Transform<Point> transform;
     private Vector velocity;
     private long dt;

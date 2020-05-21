@@ -13,7 +13,9 @@ import io.bhagat.math.linearalgebra.Vector;
 import io.bhagat.paint.Point;
 
 public class Curve extends Stroke {
-    
+
+    private static final long serialVersionUID = 4690643775847020032L;
+
     private ArrayList<String> variableNames;
     private Vector theta;
 

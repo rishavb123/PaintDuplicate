@@ -9,6 +9,8 @@ import io.bhagat.paint.transforms.Transform;
 
 public class JitteringStroke extends Stroke {
 
+    private static final long serialVersionUID = -56114024924686511L;
+
     private Transform<Point> transform;
     private long dt;
 

@@ -8,6 +8,8 @@ import java.awt.geom.Ellipse2D;
 
 public class Oval extends Shape {
 
+    private static final long serialVersionUID = 1197219833391020575L;
+
     private boolean fill;
 
     public Oval(int x, int y, int w, int h, Color color, int thickness, boolean fill) {
