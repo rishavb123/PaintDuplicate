@@ -33,7 +33,6 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import io.bhagat.paint.PaintManager.SaveObject;
 import io.bhagat.paint.items.DrawableItem;
 import io.bhagat.paint.items.ImageItem;
 

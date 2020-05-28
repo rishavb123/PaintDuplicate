@@ -19,6 +19,8 @@ public class JitteringStroke extends Stroke {
         dt = 1l;
         transform = new Transform<Point>() {
 
+            private static final long serialVersionUID = -4755887693964793075L;
+
             @Override
             public Point map(Point inp) {
                 Vector velocity = new Vector(2);

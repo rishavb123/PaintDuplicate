@@ -22,6 +22,8 @@ public class FloatingStroke extends Stroke {
         dt = 1l;
         transform = new Transform<Point>() {
 
+            private static final long serialVersionUID = -5387949533516066652L;
+
             @Override
             public Point map(Point inp) {
                 if(inp.getX() < -0.5 && velocity.get(0) < 0) velocity.multiply(new Vector(-1, 1));
