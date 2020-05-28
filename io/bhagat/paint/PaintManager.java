@@ -17,6 +17,7 @@ import io.bhagat.paint.modes.PaintMode;
 
 public class PaintManager {
 
+    
     public static PaintManager instance = new PaintManager();
 
     private Stack<DrawableItem> items;
@@ -104,7 +105,7 @@ public class PaintManager {
     }
 
     public SaveObject makeSaveObject() {
-        return new SaveObject();
+        return new SaveObject(items, removedItems);
     }
 
     public void loadSaveObject(SaveObject obj) {
@@ -161,11 +162,14 @@ public class PaintManager {
             params.put(key, value);
     }
 
-    public class SaveObject implements Serializable {
+    public static class SaveObject implements Serializable {
+
+        private static final long serialVersionUID = 7660179388808091718L;
+
         public Stack<DrawableItem> itms;
         public Stack<DrawableItem> rmvdItms;
 
-        public SaveObject() {
+        public SaveObject(Stack<DrawableItem> items, Stack<DrawableItem> removedItems) {
             this.itms = items;
             this.rmvdItms = removedItems;
         }

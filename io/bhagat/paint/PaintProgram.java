@@ -36,7 +36,6 @@ import javax.swing.event.ChangeListener;
 import io.bhagat.paint.PaintManager.SaveObject;
 import io.bhagat.paint.items.DrawableItem;
 import io.bhagat.paint.items.ImageItem;
-import io.bhagat.util.SerializableUtil;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -274,7 +273,7 @@ public class PaintProgram extends JPanel {
             File file = imageFileChooser.getSelectedFile();
             String path = file.getAbsolutePath();
             String extension;
-            String[] arr = path.split(".");
+            String[] arr = path.split("\\.");
 
             if (arr.length < 2) {
                 extension = "png";
@@ -300,9 +299,9 @@ public class PaintProgram extends JPanel {
 
     public void open() {
         serializeFileChooser.showOpenDialog(null);
-        File file = serializeFileChooser.getSelectedFile();
+        curFile = serializeFileChooser.getSelectedFile();
         try {
-            FileInputStream fileInputStream = new FileInputStream(file);
+            FileInputStream fileInputStream = new FileInputStream(curFile);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             pm.loadSaveObject((PaintManager.SaveObject) objectInputStream.readObject());
@@ -320,30 +319,33 @@ public class PaintProgram extends JPanel {
             saveas();
             return;
         }
+        try {
+            Serializable obj = pm.makeSaveObject();
+            FileOutputStream fileOutputStream = new FileOutputStream(curFile);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(obj);
+
+            objectOutputStream.close();
+            fileOutputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void saveas() {
         if (serializeFileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
             File file = serializeFileChooser.getSelectedFile();
             String path = file.getAbsolutePath();
-            String[] arr = path.split(".");
+            String[] arr = path.split("\\.");
 
             if (arr.length < 2)
                 path += ".paint";
 
-            try {
-                Serializable obj = pm.makeSaveObject();
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            curFile = new File(path);
 
-                objectOutputStream.writeObject(obj);
-
-                objectOutputStream.close();
-                fileOutputStream.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            save();
         }
     }
 

@@ -1,10 +1,11 @@
 package io.bhagat.paint.transforms;
 
+import java.io.Serializable;
 import java.util.List;
 
 import io.bhagat.math.linearalgebra.Vector;
 
-public interface Transform<E> {
+public interface Transform<E> extends Serializable {
     public E map(E inp);
     
     public static <E> List<E>  transformList(List<E> list, Transform<E> transform) {
