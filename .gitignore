@@ -3,8 +3,8 @@ build
 Test.java
 Test.class
 test.bat
-*.png
-*.jpeg
-*.jpg
-*.paint
-*.pnt
+exports/*.png
+exports/*.jpeg
+exports/*.jpg
+exports/*.paint
+exports/*.pnt
